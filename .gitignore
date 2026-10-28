@@ -1,0 +1,4 @@
+offsets.json
+*.pid
+__pycache__/
+.DS_Store
