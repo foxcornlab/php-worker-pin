@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" role="img" aria-label="php-worker-pin chain diagram">
+  <defs>
+    <marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f85149"/>
+    </marker>
+    <marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#0d1117"/>
+  <text x="34" y="46" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="24" font-weight="bold" fill="#e6edf3">the chain, one page of heap at a time</text>
+  <text x="34" y="72" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="15" fill="#8b949e">both CVEs, PHP 8.5.11 mod_php, verified on arm64 + x86_64</text>
+
+  <!-- A2 column -->
+  <g font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace">
+    <rect x="40" y="96" width="380" height="34" rx="17" fill="#2d1216" stroke="#f85149" stroke-width="1.5"/>
+    <circle cx="64" cy="113" r="7" fill="#f85149"/>
+    <text x="82" y="119" font-size="16" font-weight="bold" fill="#ff7b72">A2 · producer request</text>
+
+    <rect x="40" y="150" width="380" height="72" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="58" y="180" font-size="16" fill="#e6edf3">multipart POST with a file part:</text>
+    <text x="58" y="204" font-size="16" fill="#e6edf3">hook publishes PS(http_session_vars)</text>
+
+    <rect x="40" y="252" width="380" height="66" rx="12" fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+    <text x="58" y="282" font-size="16" fill="#ff7b72">OOM inside request startup</text>
+    <text x="58" y="304" font-size="15" fill="#8b949e">a few hundred nested parts is enough</text>
+
+    <rect x="40" y="348" width="380" height="60" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="58" y="378" font-size="16" fill="#e6edf3">PG(modules_activated) stays 0</text>
+    <text x="58" y="398" font-size="16" fill="#e6edf3">session RSHUTDOWN skipped</text>
+
+    <rect x="40" y="438" width="380" height="56" rx="12" fill="#1f2711" stroke="#d29922"/>
+    <text x="58" y="462" font-size="16" fill="#e3b341">reference dangles in</text>
+    <text x="58" y="482" font-size="16" fill="#e3b341">worker-persistent globals</text>
+  </g>
+  <path d="M230 222 V248" stroke="#f85149" stroke-width="2" marker-end="url(#arR)"/>
+  <path d="M230 318 V344" stroke="#f85149" stroke-width="2" marker-end="url(#arR)"/>
+  <path d="M230 408 V434" stroke="#f85149" stroke-width="2" marker-end="url(#arR)"/>
+
+  <!-- B3 column -->
+  <g font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace">
+    <rect x="520" y="96" width="380" height="34" rx="17" fill="#0c2136" stroke="#58a6ff" stroke-width="1.5"/>
+    <circle cx="544" cy="113" r="7" fill="#58a6ff"/>
+    <text x="562" y="119" font-size="16" font-weight="bold" fill="#79c0ff">B3 · consumer request</text>
+
+    <rect x="520" y="150" width="380" height="72" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="538" y="180" font-size="16" fill="#e6edf3">multipart POST, no file part:</text>
+    <text x="538" y="204" font-size="16" fill="#e6edf3">progress key set, END hook will fire</text>
+
+    <rect x="520" y="252" width="380" height="66" rx="12" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="538" y="282" font-size="16" fill="#79c0ff">48 page-sized spray values</text>
+    <text x="538" y="304" font-size="15" fill="#8b949e">chunk resets every request: deterministic</text>
+
+    <rect x="520" y="348" width="380" height="60" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="538" y="374" font-size="16" fill="#e6edf3">the value on the stale page carries</text>
+    <text x="538" y="396" font-size="16" fill="#e6edf3">fake ref + array + execute_data</text>
+
+    <rect x="520" y="438" width="380" height="56" rx="12" fill="#1f2711" stroke="#d29922"/>
+    <text x="538" y="462" font-size="16" fill="#e3b341">MULTIPART_EVENT_END dtors</text>
+    <text x="538" y="482" font-size="16" fill="#e3b341">the stale reference</text>
+  </g>
+  <path d="M710 222 V248" stroke="#58a6ff" stroke-width="2" marker-end="url(#arB)"/>
+  <path d="M710 318 V344" stroke="#58a6ff" stroke-width="2" marker-end="url(#arB)"/>
+  <path d="M710 408 V434" stroke="#58a6ff" stroke-width="2" marker-end="url(#arB)"/>
+
+  <!-- merge into destructor chain -->
+  <path d="M230 494 V524 H120" stroke="#d29922" stroke-width="2" fill="none"/>
+  <path d="M710 494 V524 H820" stroke="#d29922" stroke-width="2" fill="none"/>
+
+  <g font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="14">
+    <rect x="34" y="524" width="160" height="44" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="114" y="550" text-anchor="middle" fill="#e6edf3">zval_ptr_dtor</text>
+    <rect x="214" y="524" width="186" height="44" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="307" y="550" text-anchor="middle" fill="#e6edf3">reference_destroy</text>
+    <rect x="420" y="524" width="170" height="44" rx="10" fill="#161b22" stroke="#30363d"/>
+    <text x="505" y="550" text-anchor="middle" fill="#e6edf3">array_destroy</text>
+    <rect x="610" y="524" width="170" height="44" rx="10" fill="#161b22" stroke="#d29922"/>
+    <text x="695" y="550" text-anchor="middle" fill="#e3b341">pDestructor</text>
+    <rect x="800" y="524" width="106" height="44" rx="10" fill="#2d1216" stroke="#f85149" stroke-width="2"/>
+    <text x="853" y="550" text-anchor="middle" fill="#ff7b72">system()</text>
+  </g>
+  <path d="M196 546 H210" stroke="#8b949e" stroke-width="2" marker-end="url(#arG)"/>
+  <path d="M402 546 H416" stroke="#8b949e" stroke-width="2" marker-end="url(#arG)"/>
+  <path d="M592 546 H606" stroke="#8b949e" stroke-width="2" marker-end="url(#arG)"/>
+  <path d="M782 546 H796" stroke="#8b949e" stroke-width="2" marker-end="url(#arG)"/>
+
+  <rect x="250" y="590" width="440" height="36" rx="18" fill="#12261a" stroke="#3fb950" stroke-width="2"/>
+  <text x="470" y="613" text-anchor="middle" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="16" fill="#3fb950">system(cmd) ran · proof: uid=33(www-data)</text>
+</svg>

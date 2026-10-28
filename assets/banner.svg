@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="240" viewBox="0 0 1280 240" role="img" aria-label="php-worker-pin banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#0b1a2e"/>
+    </linearGradient>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="240" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1280" height="4" fill="#58a6ff"/>
+  <!-- shield mark -->
+  <g transform="translate(72,52)">
+    <path d="M44 0 L88 16 V64 C88 96 68 118 44 128 C20 118 0 96 0 64 V16 Z" fill="#161b22" stroke="#58a6ff" stroke-width="3"/>
+    <path d="M26 62 L40 78 L66 44" fill="none" stroke="#3fb950" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="200" y="106" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="56" font-weight="bold" fill="#e6edf3">php-worker-pin</text>
+  <text x="202" y="150" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="22" fill="#8b949e">CVE-2026-109618 / CVE-2026-109619</text>
+  <text x="202" y="184" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="20" fill="#58a6ff">multi-worker exploitation, over HTTP, measured</text>
+  <!-- right side: three worker tiles, one lit -->
+  <g transform="translate(1030,64)">
+    <rect x="0"   y="0" width="52" height="52" rx="8" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <rect x="62"  y="0" width="52" height="52" rx="8" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+    <rect x="124" y="0" width="52" height="52" rx="8" fill="#123322" stroke="#3fb950" stroke-width="3"/>
+    <text x="26"  y="34" text-anchor="middle" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="16" fill="#f85149">H</text>
+    <text x="88"  y="34" text-anchor="middle" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="16" fill="#f85149">H</text>
+    <text x="150" y="34" text-anchor="middle" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="16" fill="#3fb950">F</text>
+    <text x="89" y="86" text-anchor="middle" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="14" fill="#8b949e">holds + one free child</text>
+  </g>
+</svg>

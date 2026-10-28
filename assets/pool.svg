@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="480" viewBox="0 0 940 480" role="img" aria-label="pool pinning diagram">
+  <defs>
+    <marker id="parB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#58a6ff"/>
+    </marker>
+    <marker id="parR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#f85149"/>
+    </marker>
+    <marker id="parG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+  <rect width="940" height="480" fill="#0d1117"/>
+  <text x="34" y="44" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="24" font-weight="bold" fill="#e6edf3">the pool problem, and the pin</text>
+
+  <!-- left panel: roulette -->
+  <g font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace">
+    <rect x="30" y="70" width="430" height="330" rx="14" fill="#10161f" stroke="#30363d"/>
+    <text x="50" y="102" font-size="17" font-weight="bold" fill="#ff7b72">stock nginx · worker roulette</text>
+    <rect x="50" y="120" width="130" height="30" rx="15" fill="#161b22" stroke="#30363d"/>
+    <text x="115" y="140" text-anchor="middle" font-size="14" fill="#8b949e">requests</text>
+    <!-- arrows to random workers -->
+    <path d="M115 150 L100 216" stroke="#f85149" stroke-width="2" marker-end="url(#parR)"/>
+    <path d="M130 150 L200 216" stroke="#f85149" stroke-width="2" marker-end="url(#parR)"/>
+    <path d="M150 150 L300 216" stroke="#f85149" stroke-width="2" marker-end="url(#parR)"/>
+    <path d="M165 150 L395 216" stroke="#3fb950" stroke-width="2" marker-end="url(#parG)"/>
+    <!-- workers row -->
+    <g font-size="13" text-anchor="middle">
+      <rect x="64"  y="216" width="64" height="52" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="96"  y="248" fill="#e6edf3">w1</text>
+      <rect x="166" y="216" width="64" height="52" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="198" y="248" fill="#e6edf3">w2</text>
+      <rect x="268" y="216" width="64" height="52" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="300" y="248" fill="#e6edf3">w3</text>
+      <rect x="370" y="216" width="64" height="52" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="402" y="248" fill="#e6edf3">w4</text>
+    </g>
+    <text x="290" y="306" font-size="13" fill="#f85149" text-anchor="middle">miss</text>
+    <text x="402" y="306" font-size="13" fill="#3fb950" text-anchor="middle">hit</text>
+    <text x="245" y="346" text-anchor="middle" font-size="15" fill="#e6edf3">hit rate 1 / idle workers</text>
+    <text x="245" y="372" text-anchor="middle" font-size="15" fill="#8b949e">measured: 5 workers = 5 tries · 20 = 20</text>
+  </g>
+
+  <!-- right panel: pinned -->
+  <g font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace">
+    <rect x="480" y="70" width="430" height="330" rx="14" fill="#10161f" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="500" y="102" font-size="17" font-weight="bold" fill="#3fb950">pinned · one free child</text>
+    <rect x="500" y="120" width="130" height="30" rx="15" fill="#161b22" stroke="#30363d"/>
+    <text x="565" y="140" text-anchor="middle" font-size="14" fill="#8b949e">requests</text>
+    <!-- holds row -->
+    <g font-size="13" text-anchor="middle">
+      <rect x="514"  y="216" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="546"  y="248" fill="#ff7b72">hold</text>
+      <rect x="586"  y="216" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="618"  y="248" fill="#ff7b72">hold</text>
+      <rect x="658"  y="216" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="690"  y="248" fill="#ff7b72">hold</text>
+      <rect x="730"  y="216" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="762"  y="248" fill="#ff7b72">hold</text>
+      <rect x="802"  y="216" width="64" height="52" rx="8" fill="#12261a" stroke="#3fb950" stroke-width="2"/>
+      <text x="834"  y="248" fill="#3fb950">free</text>
+    </g>
+    <g font-size="13" text-anchor="middle">
+      <rect x="514"  y="286" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="546"  y="318" fill="#ff7b72">hold</text>
+      <rect x="586"  y="286" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="618"  y="318" fill="#ff7b72">hold</text>
+      <rect x="658"  y="286" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="690"  y="318" fill="#ff7b72">hold</text>
+      <rect x="730"  y="286" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="762"  y="318" fill="#ff7b72">hold</text>
+      <rect x="802"  y="286" width="64" height="52" rx="8" fill="#2d1216" stroke="#f85149"/>
+      <text x="834"  y="318" fill="#ff7b72">hold</text>
+    </g>
+    <!-- arrows converge on the free child -->
+    <path d="M565 150 C600 190 800 190 832 212" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#parG)"/>
+    <text x="660" y="188" font-size="13" fill="#3fb950" text-anchor="middle">A2 → B3 → payload, same child</text>
+    <text x="695" y="372" text-anchor="middle" font-size="15" fill="#e6edf3">first try, every run (3 / 3 measured)</text>
+    <text x="695" y="396" text-anchor="middle" font-size="14" fill="#8b949e">hold = slow processing, not slow bodies</text>
+  </g>
+
+  <text x="34" y="446" font-family="ui-monospace, 'DejaVu Sans Mono', Menlo, monospace" font-size="15" fill="#8b949e">the stale reference persists in its worker, so the only requirement is: A2 and B3 on the same worker</text>
+</svg>

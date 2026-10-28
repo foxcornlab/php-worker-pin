@@ -1,4 +1,6 @@
-# php-worker-pin
+![php-worker-pin](assets/banner.svg)
+
+![license](https://img.shields.io/badge/license-MIT-blue) ![target](https://img.shields.io/badge/target-php%208.5.11--apache-8892bf) ![lab](https://img.shields.io/badge/scope-lab--only-3fb950) ![verified](https://img.shields.io/badge/verified-arm64%20%2B%20x86__64-58a6ff)
 
 Taking the PHP 8.5 OOM-to-RCE chain (CVE-2026-109618 / CVE-2026-109619)
 from a single-worker lab to a real multi-worker Apache pool, over HTTP,
@@ -22,6 +24,8 @@ pointing at a fake `zend_array` whose `pDestructor` is `zif_system`. The
 stale-reference destructor call becomes `system(cmd)`. Full mechanics,
 payload layout, and source references in `docs/DOSSIER.md`.
 
+![chain](assets/chain.svg)
+
 ## What this repo adds
 
 **The multi-worker answer.** The chain never needs a fresh worker. The
@@ -40,6 +44,8 @@ follow on the first try. Measured:
 Full tables, failed paths, and a harness bug we caught and documented:
 `docs/RESULTS.md`. Analysis and defender notes: `docs/BYPASS.md`.
 
+![pool](assets/pool.svg)
+
 **Three measured corrections** to the commonly copied shape:
 
 - The OOM flood is driven by part count, not bytes. 1 MiB of filler with
@@ -52,6 +58,18 @@ Full tables, failed paths, and a harness bug we caught and documented:
 - Apache shrinks idle pools, so the roulette you face is the number of
   currently idle workers, not `MaxRequestWorkers`. The effective N on a
   quiet default install is small.
+
+## In action
+
+The pinned run, captured live on a 10-worker pool behind nginx. One
+calibration try, one payload try, proof file written:
+
+![pinned run](demo/demo.gif)
+
+And the single-worker baseline, the deterministic case the chain was
+designed in:
+
+![single worker](demo/demo-baseline.png)
 
 ## Use
 
@@ -105,11 +123,12 @@ php php2shell.php --offsets offsets.json ...
 php2shell.php       chain driver (runs inside the lab container)
 run-repro.sh        one-shot baseline reproduction
 tools/              offset derivation
+assets/             banner and diagrams
 lab/                php.ini, MPM configs, nginx config, test endpoints
 docs/DOSSIER.md     full technical dossier
 docs/BYPASS.md      multi-worker analysis, defender notes
 docs/RESULTS.md     every measured run
-demo/               live captured run
+demo/               live captured run, stills, and the GIF builder
 ```
 
 ## Limits, stated plainly
