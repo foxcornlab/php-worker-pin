@@ -8,8 +8,9 @@ with numbers. The published chain needs both of its requests to land on
 the same prefork worker. This repo measures what that costs on a real
 pool and removes the cost entirely.
 
-Lab-only tooling. The shipped guard refuses to run against anything that
-is not a loopback or private address.
+Research tooling for your own lab environments: local containers, private
+networks, or your own test servers. Use it only on systems you own or are
+authorized to test.
 
 ## The chain in one paragraph
 
@@ -143,9 +144,9 @@ demo/               live captured run, stills, and the GIF builder
   installs shrink idle pools, which changes N. `docs/RESULTS.md` covers
   both.
 - Both CVEs are fixed in 8.5.12, 8.4.27, 8.3.36 and 8.2.35. Upgrade.
-  This repo exists to make the exploitation path concrete for defenders,
-  not to hand anyone a weapon; that is also why the tool refuses
-  non-private targets.
+  This repo exists to make the exploitation path concrete for defenders.
+  The tool carries no target restrictions; authorization is on the
+  operator.
 
 ## License
 

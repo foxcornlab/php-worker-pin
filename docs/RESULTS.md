@@ -105,8 +105,8 @@ more practical than the config implies, and saturation easier to hold.
 
 ## Negative tests
 
-- `--host example.com` refused with exit 2 unless
-  `--i-know-this-is-not-a-lab` is passed.
+- Unreachable ingress host: connection failure surfaced as
+  `CONNFAIL:<reason>`, no crash.
 - Malformed `--offsets` JSON: clear error, exit 2, no crash.
 - Flood too small: in-band warning, clean exit 2, no crash.
 - `--check` validates the multipart wire shape against the lab before any
